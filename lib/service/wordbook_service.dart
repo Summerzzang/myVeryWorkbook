@@ -5,18 +5,22 @@ class WordbookService with ChangeNotifier {
     Wordbook(
       word: "香辛料",
       meaning: '향신료',
+      checked: 2,
     ),
     Wordbook(
       word: "国境",
       meaning: '국경',
+      checked: 3,
     ),
     Wordbook(
       word: "香辛料",
       meaning: '향신료',
+      checked: 2,
     ),
     Wordbook(
       word: "国境",
       meaning: '국경',
+      checked: 1,
     ),
     Wordbook(
       word: "香辛料",
@@ -45,5 +49,6 @@ class Wordbook {
   Wordbook({
     required this.word,
     required this.meaning,
-  });
+    checked,
+  }) : checked = checked ?? 0;
 }

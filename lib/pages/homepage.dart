@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wordbook/pages/wordbookCard.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class Homepage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topLeft,
                   child: const Text(
-                    "일본어 단어장",
+                    "타토미 단어장",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -50,7 +51,7 @@ class Homepage extends StatelessWidget {
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(
-                        Icons.arrow_upward,
+                        Icons.search,
                         color: DecoConst.secondColor,
                       ),
                     ),
@@ -77,37 +78,5 @@ class Homepage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class WordCard extends StatelessWidget {
-  const WordCard({
-    super.key,
-    required this.wordbook,
-  });
-
-  final Wordbook wordbook;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(vertical: 7),
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 25,
-        ),
-        height: 100,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: DecoConst.cardColor,
-        ),
-        child: Text(
-          wordbook.word,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
-        ));
   }
 }
