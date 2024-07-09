@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wordbook/pages/create_word.dart';
 import 'package:my_wordbook/pages/wordbookCard.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
@@ -8,12 +9,23 @@ class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List<Wordbook> wordbookList = context.read<WordbookService>().wordbookList;
+  Widget build(BuildContext context){
+    WordBook wordBook =  context.select<WordbookService, WordBook>(
+        (WordbookService service) => service.currentWordBook);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color.fromARGB(255, 254, 218, 152),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CreateWordPage(
+                initialText: "Hi, Hello",
+              ),
+              //fullscreenDialog: true,
+            ),
+          );
+        },
+        backgroundColor: DecoConst.buttonColor,
         foregroundColor: DecoConst.secondColor,
         child: const Icon(
           Icons.add,
@@ -33,9 +45,9 @@ class Homepage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topLeft,
-                  child: const Text(
-                    "타토미 단어장",
-                    style: TextStyle(
+                  child: Text(
+                    wordBook.title,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: DecoConst.secondColor,
@@ -69,9 +81,10 @@ class Homepage extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return WordCard(wordbook: wordbookList[index]);
+                  final List<Word> wordBookContents = wordBook.contents;
+                  return WordCard(word: wordBookContents[index]);
                 },
-                childCount: wordbookList.length,
+                childCount: wordBook.contents.length,
               ),
             ),
           ],
