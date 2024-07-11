@@ -10,6 +10,7 @@ class WordbookService with ChangeNotifier {
     WordBook(
       title: "타토미의 Wordbook",
       contents: dummyWordBook,
+      id: 'dummy',
     ),
   ];
 
@@ -25,13 +26,47 @@ class WordbookService with ChangeNotifier {
     required String word,
     required String meaning,
   }) {
-    // wordBookCollection[index] =
     final Word wordToCreate = Word(word: word, meaning: meaning);
     currentWordBook = WordBook(
         title: currentWordBook.title,
         contents: [...currentWordBook.contents, wordToCreate]);
+    final int wbIndex =
+        wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
+    wordBookCollection[wbIndex] = currentWordBook;
     notifyListeners();
   }
+
+  void editWordToWordbook({
+    required String wordId,
+    required String word,
+    required String meaning,
+  }) {
+    print("edit");
+    int targetWordIndex =
+        currentWordBook.contents.indexWhere((word) => word.id == wordId);
+    print(currentWordBook.contents[targetWordIndex].word);
+    currentWordBook.contents[targetWordIndex].word = word;
+    currentWordBook.contents[targetWordIndex].meaning = meaning;
+    print(currentWordBook.contents[targetWordIndex].word);
+
+    final int wbIndex =
+        wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
+    wordBookCollection[wbIndex] = currentWordBook;
+    notifyListeners();
+  }
+
+  void checkedIncrement(String wordId) {
+    Word targetWord =
+        currentWordBook.contents.firstWhere((word) => word.id == wordId);
+    if (targetWord.checked < 3) {
+      targetWord.checked++;
+      print(currentWordBook.contents
+          .firstWhere((word) => word.id == wordId)
+          .checked);
+    }
+  }
+
+  void addChecked() {}
 }
 
 class Word {
@@ -52,7 +87,8 @@ class WordBook {
   String title;
   List<Word> contents;
 
-  WordBook({required this.title, required this.contents, id}) : id = uuid.v4();
+  WordBook({required this.title, required this.contents, String? id})
+      : id = id ?? uuid.v4();
 }
 
 List<Word> dummyWordBook = [

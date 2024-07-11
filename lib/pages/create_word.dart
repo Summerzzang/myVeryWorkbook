@@ -4,9 +4,9 @@ import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
 
 class CreateWordPage extends StatefulWidget {
-  final String initialText;
+  final Word? initialWord;
 
-  const CreateWordPage({super.key, required this.initialText});
+  const CreateWordPage({super.key, this.initialWord});
 
   @override
   _CreateWordPageState createState() => _CreateWordPageState();
@@ -21,8 +21,8 @@ class _CreateWordPageState extends State<CreateWordPage> {
   @override
   void initState() {
     super.initState();
-    _textController1 = TextEditingController(text: widget.initialText);
-    _textController2 = TextEditingController();
+    _textController1 = TextEditingController(text: widget.initialWord?.word);
+    _textController2 = TextEditingController(text: widget.initialWord?.meaning);
   }
 
   @override
@@ -94,10 +94,16 @@ class _CreateWordPageState extends State<CreateWordPage> {
                       errorController2 = "의미를 입력해주세요!";
                     });
                   } else {
-                    wordBookService.addWordToWordbook(
-                      word: theWord,
-                      meaning: theMeaning,
-                    );
+                    widget.initialWord != null
+                        ? wordBookService.editWordToWordbook(
+                            wordId: widget.initialWord!.id,
+                            word: theWord,
+                            meaning: theMeaning,
+                          )
+                        : wordBookService.addWordToWordbook(
+                            word: theWord,
+                            meaning: theMeaning,
+                          );
                     Navigator.pop(context, _textController1.text);
                   }
                 },
