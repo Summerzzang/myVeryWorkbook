@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wordbook/pages/create_word.dart';
-import 'package:my_wordbook/pages/wordbook_card.dart';
+import 'package:my_wordbook/pages/word_card.dart';
+import 'package:my_wordbook/service/word_service.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,11 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Word> wordBookContents = context.select<WordbookService, List<Word>>(
-        (WordbookService service) => service.currentWordBook.contents);
+    List<Word> wordBookContents = context
+        .select<WordbookService, WordBook>((service) => service
+            .wordBookCollection
+            .firstWhere((wb) => wb.id == service.currentWordBookId))
+        .contents;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -79,7 +83,10 @@ class Homepage extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return WordCard(word: wordBookContents[index]);
+                  return ChangeNotifierProvider<Word>.value(
+                    value: wordBookContents[index],
+                    child: const WordCard(),
+                  );
                 },
                 childCount: wordBookContents.length,
               ),

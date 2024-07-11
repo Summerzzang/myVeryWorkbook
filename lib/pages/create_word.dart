@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wordbook/service/word_service.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
@@ -95,10 +96,9 @@ class _CreateWordPageState extends State<CreateWordPage> {
                     });
                   } else {
                     widget.initialWord != null
-                        ? wordBookService.editWordToWordbook(
-                            wordId: widget.initialWord!.id,
-                            word: theWord,
-                            meaning: theMeaning,
+                        ? widget.initialWord?.editWord(
+                            newWord: theWord,
+                            newMeaning: theMeaning,
                           )
                         : wordBookService.addWordToWordbook(
                             word: theWord,
