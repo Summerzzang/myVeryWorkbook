@@ -34,22 +34,6 @@ class WordbookService with ChangeNotifier {
     notifyListeners();
   }
 
-  void editWordToWordbook({
-    required String wordId,
-    required String word,
-    required String meaning,
-  }) {
-    final int currentWBIndex =
-        wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
-    List<Word> currentWBContents = wordBookCollection[currentWBIndex].contents;
-    final int targetWordIndex =
-        currentWBContents.indexWhere((word) => word.id == wordId);
-    var targetWord = currentWBContents[targetWordIndex];
-    targetWord
-      ..word = word
-      ..meaning = meaning;
-    notifyListeners();
-  }
 
   void checkedIncrement(String wordId) {
     final int currentWBIndex =
@@ -72,3 +56,22 @@ class WordBook {
   WordBook({required this.title, required this.contents, String? id})
       : id = id ?? uuid.v4();
 }
+
+
+
+// void editWordToWordbook({
+  //   required String wordId,
+  //   required String word,
+  //   required String meaning,
+  // }) {
+  //   final int currentWBIndex =
+  //       wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
+  //   List<Word> currentWBContents = wordBookCollection[currentWBIndex].contents;
+  //   final int targetWordIndex =
+  //       currentWBContents.indexWhere((word) => word.id == wordId);
+  //   var targetWord = currentWBContents[targetWordIndex];
+  //   targetWord
+  //     ..word = word
+  //     ..meaning = meaning;
+  //   notifyListeners();
+  // }

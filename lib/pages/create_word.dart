@@ -104,6 +104,7 @@ class _CreateWordPageState extends State<CreateWordPage> {
                             word: theWord,
                             meaning: theMeaning,
                           );
+
                     Navigator.pop(context, _textController1.text);
                   }
                 },

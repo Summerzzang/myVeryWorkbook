@@ -6,16 +6,16 @@ import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
   @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  @override
   Widget build(BuildContext context) {
-    List<Word> wordBookContents = context
-        .select<WordbookService, WordBook>((service) => service
-            .wordBookCollection
-            .firstWhere((wb) => wb.id == service.currentWordBookId))
-        .contents;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -80,17 +80,19 @@ class Homepage extends StatelessWidget {
                 )
               ],
             )),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return ChangeNotifierProvider<Word>.value(
-                    value: wordBookContents[index],
-                    child: const WordCard(),
-                  );
-                },
-                childCount: wordBookContents.length,
-              ),
-            ),
+            Consumer<WordbookService>(builder: (context, service, child) {
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ChangeNotifierProvider<Word>.value(
+                      value: service.getCurrentWordBook().contents[index],
+                      child: const WordCard(),
+                    );
+                  },
+                  childCount: service.getCurrentWordBook().contents.length,
+                ),
+              );
+            }),
           ],
         ),
       ),
