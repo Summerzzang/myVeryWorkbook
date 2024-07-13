@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
 
 class BookcaseWidget extends StatefulWidget {
-  const BookcaseWidget({
+  BookcaseWidget({
     super.key,
     required this.wordBook,
+    required this.onResetIndex,
   });
 
   final WordBook wordBook;
+  Function onResetIndex;
 
   @override
   State<BookcaseWidget> createState() => _BookcaseWidgetState();
@@ -18,6 +22,25 @@ class BookcaseWidget extends StatefulWidget {
 class _BookcaseWidgetState extends State<BookcaseWidget> {
   var _isTapped = false;
   final Duration animationDuration = const Duration(milliseconds: 300);
+  Timer? _timer;
+  final int _delay = 2; // seconds
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer(Duration(seconds: _delay), _onTimeout);
+  }
+
+  void _onTimeout() {
+    setState(() {
+      _isTapped = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +49,7 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
         setState(() {
           _isTapped = !_isTapped;
         });
+        _startTimer();
       },
       child: Stack(
         children: [
@@ -64,6 +88,8 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
                   context
                       .read<WordbookService>()
                       .changeCurrentWordBook(widget.wordBook);
+                  _isTapped = false;
+                  widget.onResetIndex();
                 },
                 child: const CircleAvatar(
                   radius: 16,

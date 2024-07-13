@@ -27,6 +27,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
 
+  void changeIndex(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  void resetToHome() {
+    print(22);
+    changeIndex(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,10 +47,12 @@ class _MyAppState extends State<MyApp> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: IndexedStack(
             index: currentIndex,
-            children: const [
-              Homepage(),
-              BookCasePage(),
-              Mypage(),
+            children: [
+              const Homepage(),
+              BookCasePage(
+                onResetIndex: resetToHome,
+              ),
+              const Mypage(),
             ],
           ),
         ),

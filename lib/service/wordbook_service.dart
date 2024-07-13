@@ -29,7 +29,7 @@ class WordbookService with ChangeNotifier {
 
   void changeCurrentWordBook(WordBook wb) {
     currentWordBookId = wb.id;
-    print(currentWordBookId);
+    notifyListeners();
   }
 
   //CRUD -> Word

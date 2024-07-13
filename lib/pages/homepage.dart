@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_wordbook/pages/create_word.dart';
-import 'package:my_wordbook/pages/word_card.dart';
 import 'package:my_wordbook/service/word_service.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
+import 'package:my_wordbook/widget/word_card.dart';
 import 'package:provider/provider.dart';
 
 class Homepage extends StatelessWidget {
@@ -11,8 +11,7 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String wordBookTitle =
-        context.read<WordbookService>().getCurrentWordBook().title;
+    print("Homepage");
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -44,14 +43,21 @@ class Homepage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    wordBookTitle,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: DecoConst.secondColor,
-                    ),
-                  ),
+                  child: Selector<WordbookService, String>(
+                      selector: (context, service) => service.currentWordBookId,
+                      builder: (context, service, child) {
+                        return Text(
+                          context
+                              .read<WordbookService>()
+                              .getCurrentWordBook()
+                              .title,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: DecoConst.secondColor,
+                          ),
+                        );
+                      }),
                 ),
                 const SizedBox(
                   height: 20,

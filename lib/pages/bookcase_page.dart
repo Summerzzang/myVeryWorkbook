@@ -4,7 +4,12 @@ import 'package:my_wordbook/widget/bookcase_widget.dart';
 import 'package:provider/provider.dart';
 
 class BookCasePage extends StatelessWidget {
-  const BookCasePage({super.key});
+  const BookCasePage({
+    super.key,
+    required this.onResetIndex,
+  });
+
+  final Function onResetIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class BookCasePage extends StatelessWidget {
           itemCount: wordBookCollection.length,
           itemBuilder: (context, index) {
             WordBook wordBook = wordBookCollection[index];
-            return BookcaseWidget(wordBook: wordBook);
+            return BookcaseWidget(wordBook: wordBook, onResetIndex:onResetIndex);
           }),
     );
   }
