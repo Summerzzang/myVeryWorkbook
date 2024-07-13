@@ -13,6 +13,11 @@ class WordbookService with ChangeNotifier {
       contents: dummyWordBook,
       id: 'dummy',
     ),
+    WordBook(
+      title: "Wordbook 2",
+      contents: [],
+      id: 'dummy2',
+    )
   ];
 
   WordBook getCurrentWordBook() {
@@ -20,6 +25,11 @@ class WordbookService with ChangeNotifier {
       (wb) => wb.id == currentWordBookId,
       orElse: () => wordBookCollection.first,
     );
+  }
+
+  void changeCurrentWordBook(WordBook wb) {
+    currentWordBookId = wb.id;
+    print(currentWordBookId);
   }
 
   //CRUD -> Word
@@ -33,7 +43,6 @@ class WordbookService with ChangeNotifier {
     wordBookCollection[currentWBIndex].contents.add(wordToCreate);
     notifyListeners();
   }
-
 
   void checkedIncrement(String wordId) {
     final int currentWBIndex =

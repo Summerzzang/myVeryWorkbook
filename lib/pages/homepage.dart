@@ -6,16 +6,13 @@ import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
 
-class Homepage extends StatefulWidget {
+class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
   @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
   Widget build(BuildContext context) {
+    String wordBookTitle =
+        context.read<WordbookService>().getCurrentWordBook().title;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -47,9 +44,9 @@ class _HomepageState extends State<Homepage> {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topLeft,
-                  child: const Text(
-                    "짜마의 단어장",
-                    style: TextStyle(
+                  child: Text(
+                    wordBookTitle,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: DecoConst.secondColor,

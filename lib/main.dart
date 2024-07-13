@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_wordbook/pages/bookcase_page.dart';
 import 'package:my_wordbook/pages/homepage.dart';
+import 'package:my_wordbook/pages/mypage.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +32,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Homepage(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: IndexedStack(
+            index: currentIndex,
+            children: const [
+              Homepage(),
+              BookCasePage(),
+              Mypage(),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
