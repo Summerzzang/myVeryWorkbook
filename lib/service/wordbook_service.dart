@@ -21,10 +21,22 @@ class WordbookService with ChangeNotifier {
   ];
 
   WordBook getCurrentWordBook() {
-    return wordBookCollection.firstWhere(
+    WordBook currentWordBook = wordBookCollection.firstWhere(
       (wb) => wb.id == currentWordBookId,
       orElse: () => wordBookCollection.first,
     );
+
+    List<Word> sortedContents = List.from(currentWordBook.contents);
+    sortedContents.sort((a, b) {
+      if (a.checked == 3 && b.checked != 3) {
+        return 1;
+      } else if (a.checked != 3 && b.checked == 3) {
+        return -1;
+      }
+      return 0;
+    });
+    currentWordBook.contents = sortedContents;
+    return currentWordBook;
   }
 
   void changeCurrentWordBook(WordBook wb) {
@@ -51,6 +63,11 @@ class WordbookService with ChangeNotifier {
     Word targetWord = currentWBContents.firstWhere((word) => word.id == wordId);
     if (targetWord.checked < 3) {
       targetWord.checked++;
+      if (targetWord.checked == 3) {
+        currentWBContents.remove(targetWord);
+        currentWBContents.add(targetWord);
+        notifyListeners();
+      }
     }
   }
 

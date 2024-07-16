@@ -18,6 +18,7 @@ class WordCard extends StatefulWidget {
 class _WordCardState extends State<WordCard>
     with SingleTickerProviderStateMixin {
   late WordCardAnimations _animations;
+  bool _showMeaning = false;
 
   @override
   void initState() {
@@ -39,7 +40,17 @@ class _WordCardState extends State<WordCard>
     }
   }
 
-  void _onLongPress() {}
+  void _handleLongPressStart(LongPressStartDetails details) {
+    setState(() {
+      _showMeaning = true;
+    });
+  }
+
+  void _handleLongPressEnd(LongPressEndDetails details) {
+    setState(() {
+      _showMeaning = false;
+    });
+  }
 
   @override
   void dispose() {
@@ -50,11 +61,13 @@ class _WordCardState extends State<WordCard>
   @override
   Widget build(BuildContext context) {
     return Consumer<Word>(builder: (context, word, child) {
+      print("Word card");
       return GestureDetector(
         onDoubleTap: () {
           _handleDoubleTap(word);
         },
-        onLongPress: _onLongPress,
+        onLongPressStart: _handleLongPressStart,
+        onLongPressEnd: _handleLongPressEnd,
         child: AnimatedBuilder(
             animation: _animations.controller,
             builder: (context, child) {
@@ -67,74 +80,88 @@ class _WordCardState extends State<WordCard>
                   height: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: _animations.colorAnimation.value,
+                    color: word.checked == 3
+                        ? DecoConst.mainColor
+                        : _animations.colorAnimation.value,
                   ),
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                          splashRadius: 20,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.topLeft,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateWordPage(
-                                  initialWord: word,
-                                ),
-                                //fullscreenDialog: true,
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.mode_edit_outlined,
-                            color: DecoConst.whiteFontColor,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Transform.scale(
-                          scale: _animations.scaleAnimation.value,
+                  child: _showMeaning
+                      ? Center(
                           child: Text(
+                            word.meaning,
                             textAlign: TextAlign.center,
-                            word.word,
                             style: const TextStyle(
-                              fontSize: 25,
+                              fontSize: 22,
                               color: DecoConst.whiteFontColor,
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(
-                            3,
-                            (index) {
-                              return Transform.rotate(
-                                angle: index == word.checked - 1
-                                    ? _animations.rotationAnimation.value
-                                    : 0.0,
-                                child: Icon(
-                                  word.checked > index
-                                      ? Icons.star_rounded
-                                      : Icons.star_border_rounded,
-                                  color: word.checked > index
-                                      ? DecoConst.mainColor
-                                      : DecoConst.whiteFontColor,
-                                  size: 22,
+                        )
+                      : Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: IconButton(
+                                splashRadius: 20,
+                                padding: EdgeInsets.zero,
+                                alignment: Alignment.topLeft,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateWordPage(
+                                        initialWord: word,
+                                      ),
+                                      //fullscreenDialog: true,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.mode_edit_outlined,
+                                  color: DecoConst.whiteFontColor,
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ));
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Transform.scale(
+                                scale: _animations.scaleAnimation.value,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  word.word,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    color: DecoConst.whiteFontColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: List.generate(
+                                  3,
+                                  (index) {
+                                    return Transform.rotate(
+                                      angle: index == word.checked - 1
+                                          ? _animations.rotationAnimation.value
+                                          : 0.0,
+                                      child: Icon(
+                                        word.checked > index
+                                            ? Icons.star_rounded
+                                            : Icons.star_border_rounded,
+                                        color: word.checked > index
+                                            ? DecoConst.mainColor
+                                            : DecoConst.whiteFontColor,
+                                        size: 22,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ));
             }),
       );
     });

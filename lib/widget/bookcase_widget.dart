@@ -85,11 +85,13 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
               curve: Curves.easeInOut,
               child: GestureDetector(
                 onTap: () {
-                  context
-                      .read<WordbookService>()
-                      .changeCurrentWordBook(widget.wordBook);
-                  _isTapped = false;
-                  widget.onResetIndex();
+                  if (_isTapped) {
+                    context
+                        .read<WordbookService>()
+                        .changeCurrentWordBook(widget.wordBook);
+                    _isTapped = false;
+                    widget.onResetIndex();
+                  }
                 },
                 child: const CircleAvatar(
                   radius: 16,
