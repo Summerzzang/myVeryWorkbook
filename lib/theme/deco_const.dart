@@ -7,4 +7,5 @@ abstract class DecoConst {
   static const Color buttonColor = Color.fromARGB(255, 254, 218, 152);
   static const Color blackFontColor = Color.fromARGB(255, 58, 58, 58);
   static const Color whiteFontColor = Color.fromARGB(255, 255, 255, 255);
+  static const Color lightGreyColor = Color.fromARGB(255, 228, 227, 227);
 }

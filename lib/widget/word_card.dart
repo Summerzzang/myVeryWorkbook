@@ -63,6 +63,17 @@ class _WordCardState extends State<WordCard>
     return Consumer<Word>(builder: (context, word, child) {
       print("Word card");
       return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateWordPage(
+                initialWord: word,
+              ),
+              //fullscreenDialog: true,
+            ),
+          );
+        },
         onDoubleTap: () {
           _handleDoubleTap(word);
         },
@@ -72,12 +83,12 @@ class _WordCardState extends State<WordCard>
             animation: _animations.controller,
             builder: (context, child) {
               return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 7),
+                  margin: const EdgeInsets.symmetric(vertical: 5),
                   padding: const EdgeInsets.symmetric(
-                    vertical: 12,
+                    vertical: 15,
                     horizontal: 15,
                   ),
-                  height: 100,
+                  height: 180,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: word.checked == 3
@@ -98,47 +109,22 @@ class _WordCardState extends State<WordCard>
                       : Stack(
                           children: [
                             Align(
-                              alignment: Alignment.topLeft,
-                              child: IconButton(
-                                splashRadius: 20,
-                                padding: EdgeInsets.zero,
-                                alignment: Alignment.topLeft,
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateWordPage(
-                                        initialWord: word,
-                                      ),
-                                      //fullscreenDialog: true,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.mode_edit_outlined,
-                                  color: DecoConst.whiteFontColor,
-                                ),
-                              ),
-                            ),
-                            Align(
                               alignment: Alignment.center,
                               child: Transform.scale(
                                 scale: _animations.scaleAnimation.value,
                                 child: Text(
-                                  textAlign: TextAlign.center,
                                   word.word,
                                   style: const TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 40,
                                     color: DecoConst.whiteFontColor,
                                   ),
                                 ),
                               ),
                             ),
                             Align(
-                              alignment: Alignment.centerRight,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                              alignment: Alignment.topCenter,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: List.generate(
                                   3,
                                   (index) {
