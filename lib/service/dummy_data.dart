@@ -1,6 +1,8 @@
+import 'package:my_wordbook/service/wordbook_service.dart';
+
 import 'word_service.dart';
 
-final List<Word> dummyWordBook = [
+final List<Word> dummyContents = [
   Word(
     word: "落ち着きがない",
     meaning: '산만하다',
@@ -29,4 +31,9 @@ final List<Word> dummyWordBook = [
     word: "予想を下回る",
     meaning: '예상에 못미치다',
   ),
+];
+
+List<WordBook> dataSource = [
+  WordBook(title: "Tatom's WordBook", contents: dummyContents, id: 'dummy'),
+  WordBook(title: "SUzie's Japanese", contents: [], id: 'dummy2')
 ];

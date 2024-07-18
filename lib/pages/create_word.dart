@@ -105,7 +105,7 @@ class _CreateWordPageState extends State<CreateWordPage> {
                             meaning: theMeaning,
                           );
 
-                    Navigator.pop(context, _textController1.text);
+                    Navigator.pop(context);
                   }
                 },
                 child: const Icon(

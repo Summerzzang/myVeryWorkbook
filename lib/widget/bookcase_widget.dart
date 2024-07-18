@@ -6,14 +6,16 @@ import 'package:my_wordbook/theme/deco_const.dart';
 import 'package:provider/provider.dart';
 
 class BookcaseWidget extends StatefulWidget {
-  BookcaseWidget({
+  const BookcaseWidget({
     super.key,
-    required this.wordBook,
+    required this.title,
+    required this.wordBookId,
     required this.onResetIndex,
   });
 
-  final WordBook wordBook;
-  Function onResetIndex;
+  final String title;
+  final String wordBookId;
+  final Function onResetIndex;
 
   @override
   State<BookcaseWidget> createState() => _BookcaseWidgetState();
@@ -42,6 +44,7 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
     super.dispose();
   }
 
+//Todo 아이콘부분 누르면 컨테이너 전체로 Tap이 안눌리는 버그 해결
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -68,7 +71,7 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
             ),
             transform: Matrix4.translationValues(_isTapped ? -80 : 0, 0, 0),
             child: Text(
-              widget.wordBook.title,
+              widget.title,
               style: const TextStyle(
                 color: DecoConst.whiteFontColor,
                 fontSize: 20,
@@ -88,7 +91,7 @@ class _BookcaseWidgetState extends State<BookcaseWidget> {
                   if (_isTapped) {
                     context
                         .read<WordbookService>()
-                        .changeCurrentWordBook(widget.wordBook);
+                        .changeCurrentWordBook(widget.wordBookId);
                     _isTapped = false;
                     widget.onResetIndex();
                   }

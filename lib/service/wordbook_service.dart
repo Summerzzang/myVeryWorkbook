@@ -6,41 +6,26 @@ import 'package:uuid/uuid.dart';
 var uuid = const Uuid();
 
 class WordbookService with ChangeNotifier {
-  String currentWordBookId = 'dummy';
-  List<WordBook> wordBookCollection = [
-    WordBook(
-      title: "타토미의 Wordbook",
-      contents: dummyWordBook,
-      id: 'dummy',
-    ),
-    WordBook(
-      title: "Wordbook 2",
-      contents: [],
-      id: 'dummy2',
-    )
-  ];
+  late String currentWordBookId;
+  late WordBook currentWordBook;
+  List<WordBookInfo> wordBookCollection = dataSource
+      .map(
+        (wb) => WordBookInfo(id: wb.id, title: wb.title),
+      )
+      .toList();
 
-  WordBook getCurrentWordBook() {
-    WordBook currentWordBook = wordBookCollection.firstWhere(
-      (wb) => wb.id == currentWordBookId,
-      orElse: () => wordBookCollection.first,
-    );
+  WordBook getWordBookFromId(targetId) =>
+      dataSource.firstWhere((wb) => wb.id == targetId);
 
-    List<Word> sortedContents = List.from(currentWordBook.contents);
-    sortedContents.sort((a, b) {
-      if (a.checked == 3 && b.checked != 3) {
-        return 1;
-      } else if (a.checked != 3 && b.checked == 3) {
-        return -1;
-      }
-      return 0;
-    });
-    currentWordBook.contents = sortedContents;
-    return currentWordBook;
+  WordbookService() {
+    currentWordBookId = 'dummy';
+    currentWordBook = getWordBookFromId(currentWordBookId);
+    sortingContents(currentWordBook.contents);
   }
 
-  void changeCurrentWordBook(WordBook wb) {
-    currentWordBookId = wb.id;
+  void changeCurrentWordBook(String wordBookId) {
+    currentWordBookId = wordBookId;
+    currentWordBook = getWordBookFromId(currentWordBookId);
     notifyListeners();
   }
 
@@ -50,23 +35,23 @@ class WordbookService with ChangeNotifier {
     required String meaning,
   }) {
     final Word wordToCreate = Word(word: word, meaning: meaning);
-    final int currentWBIndex =
-        wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
-    wordBookCollection[currentWBIndex].contents.add(wordToCreate);
+    currentWordBook.contents = [wordToCreate, ...currentWordBook.contents];
+    int currentIndex =
+        dataSource.indexWhere((wb) => wb.id == currentWordBookId);
+    dataSource[currentIndex] = currentWordBook;
     notifyListeners();
   }
 
+//Todo 더블탭하면 자동으로 다음 단어로 넘어가기
   void checkedIncrement(String wordId) {
-    final int currentWBIndex =
-        wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
-    List<Word> currentWBContents = wordBookCollection[currentWBIndex].contents;
-    Word targetWord = currentWBContents.firstWhere((word) => word.id == wordId);
+    final int currentWordIndex =
+        currentWordBook.contents.indexWhere((word) => word.id == wordId);
+    Word targetWord = currentWordBook.contents[currentWordIndex];
     if (targetWord.checked < 3) {
       targetWord.checked++;
       if (targetWord.checked == 3) {
-        currentWBContents.remove(targetWord);
-        currentWBContents.add(targetWord);
-        notifyListeners();
+        sortingContents(currentWordBook.contents);
+        // notifyListeners();
       }
     }
   }
@@ -83,21 +68,23 @@ class WordBook {
       : id = id ?? uuid.v4();
 }
 
+class WordBookInfo {
+  final String id;
+  String title;
 
+  WordBookInfo({
+    required this.id,
+    required this.title,
+  });
+}
 
-// void editWordToWordbook({
-  //   required String wordId,
-  //   required String word,
-  //   required String meaning,
-  // }) {
-  //   final int currentWBIndex =
-  //       wordBookCollection.indexWhere((wb) => wb.id == currentWordBookId);
-  //   List<Word> currentWBContents = wordBookCollection[currentWBIndex].contents;
-  //   final int targetWordIndex =
-  //       currentWBContents.indexWhere((word) => word.id == wordId);
-  //   var targetWord = currentWBContents[targetWordIndex];
-  //   targetWord
-  //     ..word = word
-  //     ..meaning = meaning;
-  //   notifyListeners();
-  // }
+void sortingContents(targetContents) {
+  targetContents.sort((a, b) {
+    if (a.checked == 3 && b.checked != 3) {
+      return 1;
+    } else if (a.checked != 3 && b.checked == 3) {
+      return -1;
+    }
+    return 0;
+  });
+}

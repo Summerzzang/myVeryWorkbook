@@ -13,8 +13,8 @@ class BookCasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<WordBook> wordBookCollection =
-        context.select<WordbookService, List<WordBook>>(
+    List<WordBookInfo> wordBookCollection =
+        context.select<WordbookService, List<WordBookInfo>>(
             (service) => service.wordBookCollection);
     return Scaffold(
       appBar: AppBar(
@@ -23,8 +23,11 @@ class BookCasePage extends StatelessWidget {
       body: ListView.builder(
           itemCount: wordBookCollection.length,
           itemBuilder: (context, index) {
-            WordBook wordBook = wordBookCollection[index];
-            return BookcaseWidget(wordBook: wordBook, onResetIndex:onResetIndex);
+            WordBookInfo wordBookInfo = wordBookCollection[index];
+            return BookcaseWidget(
+                title: wordBookInfo.title,
+                wordBookId: wordBookInfo.id,
+                onResetIndex: onResetIndex);
           }),
     );
   }
