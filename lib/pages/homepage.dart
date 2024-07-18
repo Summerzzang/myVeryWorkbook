@@ -4,6 +4,7 @@ import 'package:my_wordbook/pages/create_word.dart';
 import 'package:my_wordbook/service/word_service.dart';
 import 'package:my_wordbook/service/wordbook_service.dart';
 import 'package:my_wordbook/theme/deco_const.dart';
+import 'package:my_wordbook/widget/progressbar.dart';
 import 'package:my_wordbook/widget/word_card.dart';
 import 'package:provider/provider.dart';
 
@@ -14,29 +15,12 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     print("Homepage");
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CreateWordPage(),
-              //fullscreenDialog: true,
-            ),
-          );
-        },
-        backgroundColor: DecoConst.buttonColor,
-        foregroundColor: DecoConst.secondColor,
-        child: const Icon(
-          Icons.add,
-          size: 28,
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           children: [
             const SizedBox(
-              height: 70,
+              height: 80,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -51,7 +35,7 @@ class Homepage extends StatelessWidget {
                   return Text(
                     context.read<WordbookService>().getCurrentWordBook().title,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 21,
                       fontWeight: FontWeight.bold,
                       color: DecoConst.secondColor,
                     ),
@@ -98,6 +82,32 @@ class Homepage extends StatelessWidget {
                   },
                 );
               },
+            ),
+            const Progressbar(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateWordPage(),
+                    //fullscreenDialog: true,
+                  ),
+                );
+              },
+              child: Container(
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: DecoConst.lightGreyColor,
+                ),
+                child: const Icon(
+                  Icons.add,
+                ),
+              ),
             ),
           ],
         ),

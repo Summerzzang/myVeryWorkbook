@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.2
   uuid: ^4.4.0
   carousel_slider: ^4.0.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

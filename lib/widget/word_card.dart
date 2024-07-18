@@ -101,7 +101,7 @@ class _WordCardState extends State<WordCard>
                             word.meaning,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                              fontSize: 22,
+                              fontSize: 38,
                               color: DecoConst.whiteFontColor,
                             ),
                           ),
@@ -114,6 +114,7 @@ class _WordCardState extends State<WordCard>
                                 scale: _animations.scaleAnimation.value,
                                 child: Text(
                                   word.word,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 40,
                                     color: DecoConst.whiteFontColor,
