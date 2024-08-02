@@ -90,11 +90,15 @@ class _WordCardState extends State<WordCard>
                   ),
                   height: 180,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: word.checked == 3
-                        ? DecoConst.mainColor
-                        : _animations.colorAnimation.value,
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/card_box.png'),
+                        fit: BoxFit.fitWidth,
+                      )
+                      // color: word.checked == 3
+                      //     ? DecoConst.mainColor
+                      //     : _animations.colorAnimation.value,
+                      ),
                   child: _showMeaning
                       ? Center(
                           child: Text(
@@ -102,7 +106,7 @@ class _WordCardState extends State<WordCard>
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 38,
-                              color: DecoConst.whiteFontColor,
+                              color: DecoConst.blackFontColor,
                             ),
                           ),
                         )
@@ -117,7 +121,7 @@ class _WordCardState extends State<WordCard>
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 40,
-                                    color: DecoConst.whiteFontColor,
+                                    color: DecoConst.blackFontColor,
                                   ),
                                 ),
                               ),
@@ -130,19 +134,26 @@ class _WordCardState extends State<WordCard>
                                   3,
                                   (index) {
                                     return Transform.rotate(
-                                      angle: index == word.checked - 1
-                                          ? _animations.rotationAnimation.value
-                                          : 0.0,
-                                      child: Icon(
-                                        word.checked > index
-                                            ? Icons.star_rounded
-                                            : Icons.star_border_rounded,
-                                        color: word.checked > index
-                                            ? DecoConst.mainColor
-                                            : DecoConst.whiteFontColor,
-                                        size: 22,
-                                      ),
-                                    );
+                                        angle: index == word.checked - 1
+                                            ? _animations
+                                                .rotationAnimation.value
+                                            : 0.0,
+                                        child: Container(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                word.checked > index
+                                                    ? 'assets/icons/paw_pink.png'
+                                                    : 'assets/icons/paw_lined.png',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ));
                                   },
                                 ),
                               ),

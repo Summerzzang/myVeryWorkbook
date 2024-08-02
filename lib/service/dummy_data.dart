@@ -34,6 +34,6 @@ final List<Word> dummyContents = [
 ];
 
 List<WordBook> dataSource = [
-  WordBook(title: "Tatom's WordBook", contents: dummyContents, id: 'dummy'),
+  WordBook(title: "미야옹 일어 단어장", contents: dummyContents, id: 'dummy'),
   WordBook(title: "SUzie's Japanese", contents: [], id: 'dummy2')
 ];

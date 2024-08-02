@@ -66,18 +66,24 @@ class _MyAppState extends State<MyApp> {
               currentIndex = newIndex;
             });
           },
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Icon(
-                  Icons.cruelty_free,
-                  size: 28,
+              icon: Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/icons/paw_lined.png',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               label: "",
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Icon(
@@ -87,7 +93,7 @@ class _MyAppState extends State<MyApp> {
               ),
               label: "",
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Padding(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Icon(

@@ -38,7 +38,13 @@ class _CreateWordPageState extends State<CreateWordPage> {
     WordbookService wordBookService = context.read<WordbookService>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('단어 생성'),
+        title: const Text(
+          '단어 생성',
+          style: TextStyle(
+            fontFamily: 'hannaAir',
+            fontSize: 25,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -63,6 +69,9 @@ class _CreateWordPageState extends State<CreateWordPage> {
               cursorColor: DecoConst.blackFontColor,
               controller: _textController2,
               decoration: inputDecorationFunc("의미", errorController2),
+              style: const TextStyle(
+                fontFamily: 'hannaAir',
+              ),
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   setState(() {
@@ -126,6 +135,7 @@ class _CreateWordPageState extends State<CreateWordPage> {
       labelText: labelText,
       labelStyle: const TextStyle(
         color: DecoConst.blackFontColor,
+        fontFamily: 'hannaAir',
       ),
       // filled: true,
       // fillColor: DecoConst.mainColor,

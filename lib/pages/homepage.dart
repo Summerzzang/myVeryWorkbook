@@ -30,21 +30,28 @@ class _HomepageState extends State<Homepage> {
               height: 80,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              // padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               alignment: Alignment.center,
+              height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: DecoConst.lightGreyColor,
+                color: Colors.transparent,
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/title_box.png'),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               child: Selector<WordbookService, String>(
                 selector: (context, service) => service.currentWordBookId,
                 builder: (context, service, child) {
                   return Text(
                     context.read<WordbookService>().currentWordBook.title,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 21,
+                      fontFamily: 'hannaAir',
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: DecoConst.secondColor,
+                      color: DecoConst.blackFontColor,
                     ),
                   );
                 },
@@ -110,14 +117,15 @@ class _HomepageState extends State<Homepage> {
                 _carouselController.jumpToPage(0);
               },
               child: Container(
-                width: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(vertical: 5),
+                height: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: DecoConst.lightGreyColor,
+                  color: Colors.transparent,
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/title_box.png'),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
                 child: const Icon(
                   Icons.add,
