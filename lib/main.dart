@@ -34,7 +34,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void resetToHome() {
-    print(22);
     changeIndex(0);
   }
 

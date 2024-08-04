@@ -50,35 +50,32 @@ class _CreateWordPageState extends State<CreateWordPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              cursorColor: DecoConst.blackFontColor,
-              controller: _textController1,
-              decoration: inputDecorationFunc("단어", errorController1),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  setState(() {
-                    errorController1 = null;
-                  });
-                }
-              },
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              height: 70,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/title_box.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: getTextField(_textController1, '단어'),
             ),
             const SizedBox(
               height: 12,
             ),
-            TextField(
-              cursorColor: DecoConst.blackFontColor,
-              controller: _textController2,
-              decoration: inputDecorationFunc("의미", errorController2),
-              style: const TextStyle(
-                fontFamily: 'hannaAir',
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              height: 70,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/title_box.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  setState(() {
-                    errorController2 = null;
-                  });
-                }
-              },
+              child: getTextField(_textController2, '의미'),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -95,14 +92,32 @@ class _CreateWordPageState extends State<CreateWordPage> {
                 onPressed: () {
                   String theWord = _textController1.text;
                   String theMeaning = _textController2.text;
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
                   if (theWord.isEmpty) {
-                    setState(() {
-                      errorController1 = "단어를 입력해주세요!";
-                    });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: DecoConst.secondColor,
+                      content: Text(
+                        '단어를 입력해주세요!',
+                        style: TextStyle(
+                          color: DecoConst.whiteFontColor,
+                          fontSize: 16,
+                          fontFamily: 'hannaAir',
+                        ),
+                      ),
+                    ));
                   } else if (theMeaning.isEmpty) {
-                    setState(() {
-                      errorController2 = "의미를 입력해주세요!";
-                    });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      backgroundColor: DecoConst.secondColor,
+                      content: Text(
+                        '의미를 입력해주세요!',
+                        style: TextStyle(
+                          color: DecoConst.whiteFontColor,
+                          fontSize: 16,
+                          fontFamily: 'hannaAir',
+                        ),
+                      ),
+                    ));
                   } else {
                     widget.initialWord != null
                         ? widget.initialWord?.editWord(
@@ -129,21 +144,22 @@ class _CreateWordPageState extends State<CreateWordPage> {
     );
   }
 
-  InputDecoration inputDecorationFunc(String labelText, String? errorCon) {
-    return InputDecoration(
-      errorText: errorCon,
-      labelText: labelText,
-      labelStyle: const TextStyle(
-        color: DecoConst.blackFontColor,
+  TextField getTextField(textController, labelText) {
+    return TextField(
+      cursorColor: DecoConst.blackFontColor,
+      controller: textController,
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: const TextStyle(
+          color: DecoConst.blackFontColor,
+          fontFamily: 'hannaAir',
+        ),
+        border: InputBorder.none,
+        // filled: true,
+      ),
+      style: const TextStyle(
         fontFamily: 'hannaAir',
-      ),
-      // filled: true,
-      // fillColor: DecoConst.mainColor,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        fontSize: 20,
       ),
     );
   }
