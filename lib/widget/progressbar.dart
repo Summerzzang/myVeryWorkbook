@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:my_wordbook/service/wordbook_service.dart';
+import 'package:provider/provider.dart';
 
 class Progressbar extends StatefulWidget {
   const Progressbar({super.key});
@@ -31,26 +32,37 @@ class _ProgressbarState extends State<Progressbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: const EdgeInsets.all(0),
-      margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-      child: LinearPercentIndicator(
-        padding: const EdgeInsets.all(0),
-        curve: Curves.bounceInOut,
-        lineHeight: 70.0,
-        animation: true,
-        animationDuration: 1000,
-        percent: _progress,
-        center: Text(
-          '${(_progress * 100).toInt()}%',
-          style: const TextStyle(
-            fontSize: 20.0,
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: 80,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.transparent,
+            image: const DecorationImage(
+              image: AssetImage('assets/images/title_box.png'),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        backgroundColor: Colors.grey[300],
-        progressColor: Colors.blue,
-        barRadius: const Radius.circular(15),
-      ),
+        Selector<WordbookService, double>(
+            selector: (context, service) => service.currentWordBook.status,
+            builder: (context, status, child) {
+              return Positioned(
+                top: 0,
+                bottom: 0,
+                left: 0,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  width: status * screenWidth < 70 ? 70 : status * screenWidth,
+                  child: Image.asset('assets/icons/paw_pink.png'),
+                ),
+              );
+            }),
+      ],
     );
   }
 }

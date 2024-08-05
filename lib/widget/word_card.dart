@@ -101,13 +101,26 @@ class _WordCardState extends State<WordCard>
                       ),
                   child: _showMeaning
                       ? Center(
-                          child: Text(
-                            word.meaning,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 38,
-                              color: DecoConst.blackFontColor,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                word.meaning,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: DecoConst.blackFontColor,
+                                ),
+                              ),
+                              Text(
+                                word.description,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  color: DecoConst.blackFontColor,
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       : Stack(

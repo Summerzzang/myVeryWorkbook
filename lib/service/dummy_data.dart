@@ -6,6 +6,7 @@ final List<Word> dummyContents = [
   Word(
     word: "落ち着きがない",
     meaning: '산만하다',
+    description: '예를들면 가나다라 마바사사사삿',
     checked: 2,
   ),
   Word(

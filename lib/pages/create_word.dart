@@ -16,14 +16,15 @@ class CreateWordPage extends StatefulWidget {
 class _CreateWordPageState extends State<CreateWordPage> {
   late TextEditingController _textController1;
   late TextEditingController _textController2;
-  String? errorController1;
-  String? errorController2;
+  late TextEditingController _textController3;
 
   @override
   void initState() {
     super.initState();
     _textController1 = TextEditingController(text: widget.initialWord?.word);
     _textController2 = TextEditingController(text: widget.initialWord?.meaning);
+    _textController3 =
+        TextEditingController(text: widget.initialWord?.description);
   }
 
   @override
@@ -62,9 +63,7 @@ class _CreateWordPageState extends State<CreateWordPage> {
               ),
               child: getTextField(_textController1, '단어'),
             ),
-            const SizedBox(
-              height: 12,
-            ),
+            const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               height: 70,
@@ -76,6 +75,19 @@ class _CreateWordPageState extends State<CreateWordPage> {
                 ),
               ),
               child: getTextField(_textController2, '의미'),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              height: 70,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  image: AssetImage('assets/images/title_box.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: getTextField(_textController3, '설명'),
             ),
             const SizedBox(height: 20),
             SizedBox(

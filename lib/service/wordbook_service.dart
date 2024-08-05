@@ -20,7 +20,13 @@ class WordbookService with ChangeNotifier {
   WordbookService() {
     currentWordBookId = 'dummy';
     currentWordBook = getWordBookFromId(currentWordBookId);
-    // sortingWithPawNumbers(currentWordBook.contents);
+    // calculating progress status
+    int sumOfChecked = 0;
+    for (var word in currentWordBook.contents) {
+      sumOfChecked += word.checked;
+    }
+    currentWordBook.status =
+        (sumOfChecked) / (currentWordBook.contents.length * 3);
   }
 
   void changeCurrentWordBook(String wordBookId) {
@@ -49,25 +55,38 @@ class WordbookService with ChangeNotifier {
     Word targetWord = currentWordBook.contents[currentWordIndex];
     if (targetWord.checked < 3) {
       targetWord.checked++;
+      currentWordBook.status += 1 / (currentWordBook.contents.length * 3);
+      notifyListeners();
     }
   }
 
   void sortingWithPawNumbers(bool isReverse) {
     currentWordBook.contents.sort((a, b) => a.checked.compareTo(b.checked));
-    isReverse
-        ? currentWordBook.contents =
-            [...currentWordBook.contents].reversed.toList()
-        : currentWordBook.contents = [...currentWordBook.contents];
+    if (isReverse) {
+      currentWordBook.contents = currentWordBook.contents.reversed.toList();
+    }
+  }
+
+  void sortingWithCreatedAt(bool isReverse) {
+    currentWordBook.contents.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    if (isReverse) {
+      currentWordBook.contents = currentWordBook.contents.reversed.toList();
+    }
   }
 }
 
 class WordBook {
   final String id;
   String title;
+  double status;
   List<Word> contents;
 
-  WordBook({required this.title, required this.contents, String? id})
-      : id = id ?? uuid.v4();
+  WordBook({
+    required this.title,
+    required this.contents,
+    String? id,
+    this.status = 0.0,
+  }) : id = id ?? uuid.v4();
 }
 
 class WordBookInfo {

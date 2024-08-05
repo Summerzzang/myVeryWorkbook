@@ -85,7 +85,11 @@ class _HomepageState extends State<Homepage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  service.sortingWithCreatedAt(true);
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
                                 child: const Text(
                                   "최신순",
                                   style: TextStyle(
@@ -96,7 +100,11 @@ class _HomepageState extends State<Homepage> {
                               ),
                               const SizedBox(height: 7),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  service.sortingWithCreatedAt(false);
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
                                 child: const Text(
                                   "만든순",
                                   style: TextStyle(

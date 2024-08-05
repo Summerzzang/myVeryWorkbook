@@ -5,15 +5,19 @@ var uuid = const Uuid();
 
 class Word extends ChangeNotifier {
   final String id;
+  final DateTime createdAt;
   String word;
   String meaning;
+  String description;
   int checked;
 
   Word({
     required this.word,
     required this.meaning,
     this.checked = 0,
-  }) : id = uuid.v4();
+    this.description = '',
+  })  : id = uuid.v4(),
+        createdAt = DateTime.now();
 
   void editWord({
     required String newWord,
