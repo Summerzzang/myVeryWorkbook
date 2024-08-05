@@ -20,7 +20,7 @@ class WordbookService with ChangeNotifier {
   WordbookService() {
     currentWordBookId = 'dummy';
     currentWordBook = getWordBookFromId(currentWordBookId);
-    sortingContents(currentWordBook.contents);
+    // sortingWithPawNumbers(currentWordBook.contents);
   }
 
   void changeCurrentWordBook(String wordBookId) {
@@ -49,14 +49,16 @@ class WordbookService with ChangeNotifier {
     Word targetWord = currentWordBook.contents[currentWordIndex];
     if (targetWord.checked < 3) {
       targetWord.checked++;
-      if (targetWord.checked == 3) {
-        sortingContents(currentWordBook.contents);
-        // notifyListeners();
-      }
     }
   }
 
-  void addChecked() {}
+  void sortingWithPawNumbers(bool isReverse) {
+    currentWordBook.contents.sort((a, b) => a.checked.compareTo(b.checked));
+    isReverse
+        ? currentWordBook.contents =
+            [...currentWordBook.contents].reversed.toList()
+        : currentWordBook.contents = [...currentWordBook.contents];
+  }
 }
 
 class WordBook {
@@ -75,16 +77,5 @@ class WordBookInfo {
   WordBookInfo({
     required this.id,
     required this.title,
-  });
-}
-
-void sortingContents(targetContents) {
-  targetContents.sort((a, b) {
-    if (a.checked == 3 && b.checked != 3) {
-      return 1;
-    } else if (a.checked != 3 && b.checked == 3) {
-      return -1;
-    }
-    return 0;
   });
 }

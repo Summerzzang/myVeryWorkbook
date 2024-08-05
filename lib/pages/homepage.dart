@@ -71,7 +71,77 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (context) {
+                        WordbookService service =
+                            context.read<WordbookService>();
+                        return Container(
+                          padding: const EdgeInsets.all(16),
+                          // height: 200,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                onTap: () {},
+                                child: const Text(
+                                  "최신순",
+                                  style: TextStyle(
+                                    fontFamily: 'hannaAir',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7),
+                              GestureDetector(
+                                onTap: () {},
+                                child: const Text(
+                                  "만든순",
+                                  style: TextStyle(
+                                    fontFamily: 'hannaAir',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7),
+                              GestureDetector(
+                                onTap: () {
+                                  service.sortingWithPawNumbers(false);
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "발바닥 개수 적은순",
+                                  style: TextStyle(
+                                    fontFamily: 'hannaAir',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7),
+                              GestureDetector(
+                                onTap: () {
+                                  service.sortingWithPawNumbers(true);
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },
+                                child: const Text(
+                                  "발바닥 개수 많은순",
+                                  style: TextStyle(
+                                    fontFamily: 'hannaAir',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
                   icon: const Icon(
                     Icons.filter_alt,
                     color: DecoConst.secondColor,
