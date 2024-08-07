@@ -63,15 +63,24 @@ class _HomepageState extends State<Homepage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search,
-                    color: DecoConst.secondColor,
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    width: 35,
+                    height: 35,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/icons/filter.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
+                const SizedBox(width: 5),
+                GestureDetector(
+                  onTap: () {
                     showModalBottomSheet<void>(
                       context: context,
                       builder: (context) {
@@ -150,11 +159,21 @@ class _HomepageState extends State<Homepage> {
                       },
                     );
                   },
-                  icon: const Icon(
-                    Icons.filter_alt,
-                    color: DecoConst.secondColor,
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    width: 35,
+                    height: 35,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/icons/sorting.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
             Selector<WordbookService, List<Word>>(

@@ -71,10 +71,10 @@ class _MyAppState extends State<MyApp> {
                 padding: const EdgeInsets.only(top: 10.0),
                 width: 50,
                 height: 50,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                      'assets/icons/paw_lined.png',
+                      'assets/icons/${currentIndex == 0 ? 'paw_pink' : 'paw_lined'}.png',
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -82,22 +82,34 @@ class _MyAppState extends State<MyApp> {
               ),
               label: "",
             ),
-            const BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Icon(
-                  Icons.shelves,
-                  size: 26,
+            BottomNavigationBarItem(
+              icon: Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/icons/${currentIndex == 1 ? 'bookshelf_hover' : 'bookshelf'}.png',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               label: "",
             ),
-            const BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Icon(
-                  Icons.account_circle_outlined,
-                  size: 26,
+            BottomNavigationBarItem(
+              icon: Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/icons/${currentIndex == 2 ? 'meow_hover' : 'meow'}.png',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               label: "",

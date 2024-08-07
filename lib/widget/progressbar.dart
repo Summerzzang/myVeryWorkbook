@@ -32,37 +32,46 @@ class _ProgressbarState extends State<Progressbar> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Stack(
-      children: [
-        Container(
-          alignment: Alignment.center,
-          height: 80,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.transparent,
-            image: const DecorationImage(
-              image: AssetImage('assets/images/title_box.png'),
-              fit: BoxFit.cover,
+    return LayoutBuilder(builder: (context, constraints) {
+      double screenWidth = constraints.maxWidth;
+      return Stack(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            height: 80,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.transparent,
+              image: const DecorationImage(
+                image: AssetImage('assets/images/road.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
-        Selector<WordbookService, double>(
+          Selector<WordbookService, double>(
             selector: (context, service) => service.currentWordBook.status,
             builder: (context, status, child) {
-              return Positioned(
+              print(screenWidth);
+              print(status);
+              print(status * screenWidth);
+
+              return AnimatedPositioned(
+                duration: const Duration(milliseconds: 500),
                 top: 0,
                 bottom: 0,
-                left: 0,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  width: status * screenWidth < 70 ? 70 : status * screenWidth,
-                  child: Image.asset('assets/icons/paw_pink.png'),
+                left: status * screenWidth - 110 - 15,
+                child: SizedBox(
+                  width: 110,
+                  child: Image.asset(
+                    'assets/images/runningmeow.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               );
-            }),
-      ],
-    );
+            },
+          ),
+        ],
+      );
+    });
   }
 }
